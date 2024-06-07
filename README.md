@@ -1,6 +1,6 @@
 # FLUB
 
-Data and codes for the paper "When LLMs Meet Cunning Questions: A Fallacy Understanding Benchmark for Large Language Models"
+Data and codes for the paper "When LLMs Meet Cunning Texts: A Fallacy Understanding Benchmark for Large Language Models"
 
 
 
