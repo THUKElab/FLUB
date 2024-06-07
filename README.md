@@ -17,3 +17,5 @@ Please consider citing this paper if you use the `code` or `data` from our work.
 }
 ```
 
+### License
+The data and our code are both subject to the [MIT License](./LICENSE).
