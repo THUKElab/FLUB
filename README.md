@@ -10,7 +10,7 @@ Please consider citing this paper if you use the `code` or `data` from our work.
 
 ```
 @article{li2024llms,
-  title={When llms meet cunning questions: A fallacy understanding benchmark for large language models},
+  title={When llms meet cunning texts: A fallacy understanding benchmark for large language models},
   author={Li, Yinghui and Zhou, Qingyu and Luo, Yuanzhen and Ma, Shirong and Li, Yangning and Zheng, Hai-Tao and Hu, Xuming and Yu, Philip S},
   journal={arXiv preprint arXiv:2402.11100},
   year={2024}
