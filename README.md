@@ -18,12 +18,12 @@ Please consider citing this paper if you use the `code` or `data` from our work.
 ```
 
 ### License
-The data and our code are both subject to the MIT License.
+The  `data` and our `code` are both subject to the MIT License.
 
 ```
 MIT License
 
-Copyright (c) Facebook, Inc. and its affiliates.
+Copyright (c) Tsinghua Knowledge Engineering Laboratory (SZ) and its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
