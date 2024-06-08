@@ -54,11 +54,11 @@ python analysis.py
 
 All metrics would be saved to `metrics.tsv`.
 
-### Metadata and Data Schema
+### Metadata and Data Format
 
 The Croissant metadata of FLUB is at [FLUB_croissant_metadata](https://github.com/THUKElab/FLUB/blob/main/FLUB_croissant_metadata.json)
 
-The data schema of FLUB is as follows:
+The data format of FLUB is as follows:
 
 ```json
 {
