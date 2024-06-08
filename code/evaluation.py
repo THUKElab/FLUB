@@ -22,15 +22,16 @@ Please act as an impartial judge and evaluate the quality of the response provid
 """.strip()
 
 decoding_params = dict(temperature=0.3, top_p=0.7, max_tokens=1024)
-num_processes = 16
+num_processes = 32
 
-question_template = "以下的句子或问题存在不合理或幽默之处，请简要地解释其中不合理或幽默之处：\n{text}"
+# question_template = "以下的句子或问题存在不合理或幽默之处，请简要地解释其中不合理或幽默之处：\n{text}"
+question_template = "以下的句子或问题存在不合理或幽默之处，请解释其中不合理或幽默之处：\n{text}"
 model_name = "gpt-4-1106-preview"
 
-# evaluation_dir = "evaluations"
-# input_dir = "outputs"
-evaluation_dir = "evaluations_fewshot"
-input_dir = "outputs_fewshot"
+evaluation_dir = "evaluations"
+input_dir = "outputs"
+# evaluation_dir = "evaluations_fewshot"
+# input_dir = "outputs_fewshot"
 
 def func(line):
     item = json.loads(line)

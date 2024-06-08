@@ -1,9 +1,10 @@
 import openai
 import requests
-import json
 
 openai.api_base = "xxx"
 openai.api_key = "xxx"
+openai.api_type = "azure"
+openai.api_version = "2023-03-15-preview"
 
 system_prompt = "You are a helpful assistant."
 

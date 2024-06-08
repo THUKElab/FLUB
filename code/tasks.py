@@ -31,8 +31,9 @@ if not args.is_api:
         model_path = os.path.join(model_path, "main")
     model = VLLMWrapper(model=model_path, trust_remote_code=True, gpu_memory_utilization=args.gpu_memory_utilization, tensor_parallel_size=args.tp_size, swap_space=args.swap_space, model_name=args.model_name)
 
-data_file = "ruozhiba.json"
+data_file = "/data/FLUB.json"
 output_dir = "outputs"
+# output_dir = "outputs_temp03"
 if args.fewshot:
     output_dir = "outputs_fewshot"
 prompt_dir = "prompts"
@@ -41,8 +42,11 @@ with open(data_file, "r", encoding="utf-8") as f:
     data = [json.loads(line) for line in f]
 candidates = "，".join(sorted(set([item["type"] for item in data if isinstance(item["type"], str)])))
 
-tasks = ["classification", "selection", "explanation"]
-# tasks = ["classification_nocot", "selection_nocot"]
+tasks = []
+tasks += ["classification", "selection", "explanation"]
+tasks += ["classification_nocot", "selection_nocot"]
+tasks += ["explanation_cot"]
+tasks += ["classification_v2", "classification_v2_nocot"]
 
 decoding_params = dict(temperature=0.7, top_p=0.8, max_tokens=1024)
 num_processes = args.num_processes
@@ -52,8 +56,11 @@ if "ernie" in args.model_name.lower():
 else:
     from openai_api import call_openai_api
 
+print(f"Output: {output_dir} | Decoding Params: {decoding_params} | Tasks: {tasks}")
+
 shot_templates = {
     "classification": "输入：{sentence}\n分类：{answer}",
+    "classification_v2": "输入：{sentence}\n分类：{answer}",
     "selection": "输入：{sentence}\n选项：\n{options}\n答案：{answer}",
     "explanation_q": "输入问题：{sentence}\n回答：{answer}",
     "explanation_nq": "输入句子：{sentence}\n解释：{answer}"
@@ -69,7 +76,7 @@ for item in data:
     explanation = item["explanation"]
     fewshot_data["selection"][_id] = dict(sentence=sentence, options=options, answer=answer)
     if isinstance(_type, str):
-        fewshot_data["classification"][_id] = dict(sentence=sentence, answer=_type)
+        fewshot_data["classification_v2"][_id] = fewshot_data["classification"][_id] = dict(sentence=sentence, answer=_type)
     if item["is_question"]:
         fewshot_data["explanation_q"][_id] = dict(sentence=sentence, answer=explanation)
     else:
@@ -91,6 +98,8 @@ for task in tasks:
         if os.path.exists(file):
             with open(file, "r", encoding="utf-8") as f:
                 prompt_templates[key] = f.read()
+    print("Prompt Templates:")
+    print(prompt_templates)
     ids = set()
     if args.fewshot:
         task = f"{task_name}_{args.fewshot}shot"
@@ -107,7 +116,7 @@ for task in tasks:
         _id = item["id"]
         # print(prompt_templates)
         fs_match_name = task_name
-        if task_name == "explanation":
+        if task_name.startswith("explanation"):
             fs_match_name = fs_match_name + ("_q" if item["is_question"] else "_nq")
         shot_template = shot_templates.get(fs_match_name)
         if item["is_question"]:
@@ -119,7 +128,8 @@ for task in tasks:
         )
         answer = None
         if task.startswith("classification"):
-            slots["candidates"] = candidates
+            if "v2" not in task:
+                slots["candidates"] = candidates
             _type = item["type"]
             if not isinstance(_type, str):
                 continue
@@ -146,15 +156,6 @@ for task in tasks:
             "answer": answer
         }
         outputs.append(output)
-    
-    gpt4_output_file = os.path.join(output_dir, f"{task}_output_gpt-4-1106-preview.jsonl")
-    if args.fewshot and os.path.exists(gpt4_output_file):
-        print("[Warning] Reuse GPT-4 Output File!!!")
-        with open(gpt4_output_file, "r", encoding="utf-8") as f:
-            outputs = [json.loads(line) for line in f.readlines()]
-        prompts = [output["prompt"] for output in outputs]
-        for output in outputs:
-            output["response"] = None
     
     prompts = [prompt for i, prompt in enumerate(prompts) if outputs[i]["id"] not in ids]
     outputs = [output for output in outputs if output["id"] not in ids]

@@ -2,6 +2,58 @@
 
 Data and codes for the paper "When LLMs Meet Cunning Texts: A Fallacy Understanding Benchmark for Large Language Models"
 
+### Requirements
+
+- transformers ~= 4.35.0
+- vllm ~= 0.2.2
+- openai == 0.28.0
+- scikit-learn
+- pandas
+- numpy
+- tqdm
+
+### How to run
+
+#### Step 1: Model Inference
+
+For local models (Qwen-72B-Chat, Yi-34B-Chat, Baichuan2-13B-Chat, etc.), here is an example:
+
+```shell
+python tasks.py \
+    --model_name Qwen-72B-Chat \
+    --tp_size 8 \
+    --gpu_memory_utilization 0.9 \
+    --fewshot 0
+```
+
+For API models (GPT-4-Turbo, ERNIE-Bot-4.0, etc.), here is another example:
+
+```shell
+python tasks.py \
+    --model_name gpt-4-1106-preview \
+    --is_api \
+    --num_processes 32 \
+    --fewshot 0
+```
+
+#### Step 2: Automatic Evaluation
+
+Please run
+
+```shell
+python evaluation.py
+```
+
+#### Step 3: Compute Metrics
+
+Please run
+
+```shell
+python analysis.py
+```
+
+All metrics would be saved to `metrics.tsv`.
+
 
 
 ### Citation

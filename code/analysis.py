@@ -2,24 +2,39 @@ import os
 import re
 import json
 import pandas as pd
+from tqdm import trange
+import numpy as np
+import random
+from sklearn.metrics import f1_score
+random.seed(0)
 
-data_file = "ruozhiba.json"
+data_file = "/data/FLUB.json"
 with open(data_file, "r", encoding="utf-8") as f:
     data = [json.loads(line) for line in f]
 candidates = sorted(set([item["type"] for item in data if isinstance(item["type"], str)]))
+
+candidate_mapping = {
+    "谐音": "字音错误",
+    "多音字": "字音错误",
+    "偷换词义/字义": "歧义",
+    "事实性错误": "事实常识错误",
+    "违反常识": "事实常识错误"
+}
+
+candidates = list(set([candidate_mapping.get(candidate, candidate) for candidate in candidates]))
 print(f"{candidates=}")
 
-# base_dir = "outputs"
-# evaluation_dir = "evaluations"
-base_dir = "outputs_fewshot"
-evaluation_dir = "evaluations_fewshot"
+base_dir = "outputs"
+evaluation_dir = "evaluations"
+# base_dir = "outputs_fewshot"
+# evaluation_dir = "evaluations_fewshot"
 metrics = {}
 
 options = "ABCD"
 
-def verbalize(text, task):
+def verbalize(text, task, model_name):
     if task.startswith("classification"):
-        match = re.search(f"分类：({'|'.join(candidates)})", text)
+        match = re.search(f"分类[是为：]*\s*({'|'.join(candidates)})", text, flags=re.S | re.M)
         if match is not None:
             return match.group(1)
         match2 = re.search("|".join(candidates), text)
@@ -27,11 +42,14 @@ def verbalize(text, task):
             return match2.group(0)
         return ""
     elif task.startswith("selection"):
-        match = re.search(r"答案：(.+)", text)
+        match = re.search(r"(答案|选项)[是为：]*\s*(.+)", text, flags=re.S | re.M)
         if match is not None:
-            match_str = match.group(1)
+            match_str = match.group(2)
             if match_str[0] in options:
                 return match_str[0]
+            submatch = re.search(f"[{options}]", match_str)
+            if submatch is not None:
+                return submatch.group()
         match2 = re.search(f"[{options}]", text)
         if match2 is not None:
             return match2.group()
@@ -50,6 +68,7 @@ def match_score(evaluation):
     assert 1 <= score <= 10, f"{evaluation}"
     return score
 
+answer_set, answers = None, None
 for file in os.listdir(base_dir):
     if not file.endswith(".jsonl"):
         continue
@@ -71,18 +90,27 @@ for file in os.listdir(base_dir):
                 valid_count += 1
         score = score / valid_count
         print(f"{score=}, {len(items)=}, {valid_count=}")
-        
+        metrics[model_name][task] = score
     else:
         score = 0
+        predictions, answers = [], []
         path = os.path.join(base_dir, file)
         with open(path, "r", encoding="utf-8") as f:
             items = [json.loads(line) for line in f]
         for item in items:
             response, answer = item["response"], item["answer"]
-            prediction = verbalize(response, task)
+            prediction = verbalize(response, task, model_name)
+            if task.startswith("classification"):
+                prediction, answer = candidate_mapping.get(prediction, prediction), candidate_mapping.get(answer, answer)
+                if prediction not in candidates:
+                    prediction = ""
+                predictions.append(prediction), answers.append(answer)
             score += get_score(prediction, answer, task)
         score = score / len(items)
-    metrics[model_name][task] = score
+        metrics[model_name][task] = score
+        if task.startswith("classification"):
+            metrics[model_name][f"{task}_f1"] = f1_score(answers, predictions, labels=candidates, average="macro")
+
 
 model_name_mapping = {
     "baichuan2-7b-chat": "Baichuan2-7B-Chat",
@@ -99,17 +127,25 @@ model_name_mapping = {
     "yi-6b-chat": "Yi-6B-Chat",
     "yi-34b-chat": "Yi-34B-Chat",
 }
-# columns = ["model_name", "classification", "selection", "explanation", "classification_nocot", "selection_nocot"]
-columns = ["model_name"] + [f"{task}_{shot}shot" for task in ["classification", "selection", "explanation"] for shot in [1, 2, 5]]
+columns = [
+    "model_name", 
+    "classification_nocot", "classification",
+    "classification_nocot_f1", "classification_f1", 
+    "classification_v2_nocot", "classification_v2",
+    "classification_v2_nocot_f1", "classification_v2_f1",
+    "selection_nocot", "selection", 
+    "explanation", "explanation_cot", 
+]
+# columns = ["model_name"] + [f"{task}_{shot}shot{ext_info}" for task in ["classification", "classification_v2", "selection", "explanation"] for shot in [1, 2, 5] for ext_info in [""] + (["_f1"] if task.startswith("classification") else [])]
 output = pd.DataFrame(columns=columns)
 for model_name, task_metrics in metrics.items():
     output.loc[len(output)] = {"model_name": model_name_mapping[model_name.lower()], **task_metrics}
-# output = output.sort_values(by="explanation", ascending=False)
+if "explanation" in columns:
+    output = output.sort_values(by="explanation", ascending=False)
 for column in output.columns:
     if column.startswith("classification") or column.startswith("selection"):
         output[column] = output[column].map(lambda x: f"{round(x * 100, 2):.2f}")
     elif column.startswith("explanation"):
         output[column] = output[column].map(lambda x: f"{round(x, 3):.3f}")
 
-# output.to_csv("metrics_v2.tsv", sep="\t", index=False)
-output.to_csv("metrics_v3.tsv", sep="\t", index=False)
+output.to_csv("metrics.tsv", sep="\t", index=False)
