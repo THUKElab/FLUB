@@ -8,7 +8,7 @@ import random
 from sklearn.metrics import f1_score
 random.seed(0)
 
-data_file = "/data/FLUB.json"
+data_file = "/data/FLUB.jsonl"
 with open(data_file, "r", encoding="utf-8") as f:
     data = [json.loads(line) for line in f]
 candidates = sorted(set([item["type"] for item in data if isinstance(item["type"], str)]))

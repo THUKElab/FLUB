@@ -31,7 +31,7 @@ if not args.is_api:
         model_path = os.path.join(model_path, "main")
     model = VLLMWrapper(model=model_path, trust_remote_code=True, gpu_memory_utilization=args.gpu_memory_utilization, tensor_parallel_size=args.tp_size, swap_space=args.swap_space, model_name=args.model_name)
 
-data_file = "/data/FLUB.json"
+data_file = "/data/FLUB.jsonl"
 output_dir = "outputs"
 # output_dir = "outputs_temp03"
 if args.fewshot:
