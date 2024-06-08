@@ -54,6 +54,29 @@ python analysis.py
 
 All metrics would be saved to `metrics.tsv`.
 
+### Metadata and Data Schema
+
+The Croissant metadata of FLUB is at [FLUB_croissant_metadata](https://github.com/THUKElab/FLUB/blob/main/FLUB_croissant_metadata.json)
+
+The data schema of FLUB is as follows:
+
+```json
+{
+  "text": "The input cunning text",
+  "is_question": "Is the input cunning text a question?",
+  "type": "The cunning type of the input text for the Cunning Type Classification task.",
+  "explanation": "The correct explanation of the input text for the Fallacy Explanation task.",
+  "id": "The id of each data sample",
+  "options": {
+    "A": "The candidate answer 1 for the input text (question)",
+    "B": "The candidate answer 2 for the input text (question)",
+    "C": "The candidate answer 3 for the input text (question)",
+    "D": "The candidate answer 4 for the input text (question)"
+  },
+  "answer": "The correct answer for the Answer Selection (Multiple Choice) task."
+}
+```
+
 
 
 ### Citation

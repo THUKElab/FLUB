@@ -31,7 +31,7 @@ record_sets = [
         fields=[
             # Fields can be extracted from the FileObjects/FileSets.
             mlc.Field(
-                id="jsonl/context",
+                id="jsonl/id",
                 name="id",
                 description="The id of each data sample.",
                 data_types=mlc.DataType.TEXT,

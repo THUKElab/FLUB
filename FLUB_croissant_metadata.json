@@ -80,7 +80,7 @@
       "field": [
         {
           "@type": "cr:Field",
-          "@id": "jsonl/context",
+          "@id": "jsonl/id",
           "name": "id",
           "description": "The id of each data sample.",
           "dataType": "sc:Text",
