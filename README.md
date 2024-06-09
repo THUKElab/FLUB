@@ -1,10 +1,8 @@
-<div id="top" align="center">
-# When LLMs Meet Cunning Texts: A Fallacy Understanding Benchmark for Large Language Models
+<h1 align="center">When LLMs Meet Cunning Texts: A Fallacy Understanding Benchmark for Large Language Models</h1>
 
-    <!-- <p align="center"> -->
-    <font size="4">[Paper](https://arxiv.org/abs/2402.11100) | [Webpage](https://thukelab.github.io/FLUB/) </font>
-    <!-- </p> -->
-</div>
+<p align="center">
+    <a href="https://arxiv.org/abs/2402.11100">Paper</a> | <a href="https://thukelab.github.io/FLUB/">Webpage</a>
+</p>
 
 ### Requirements
 
