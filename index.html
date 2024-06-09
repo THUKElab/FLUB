@@ -137,17 +137,18 @@
             <p style="text-align: left; font-size: 16px;">
             We challenge the reasoning and understanding abilities of LLMs by proposing a FaLlacy Understanding 
             Benchmark (FLUB) containing cunning texts that are easy for humans to understand but difficult for models to grasp. 
-            We collect real cunning texts as our raw data from a famous Chinese online forum, the <a href="https://tieba.baidu.com/f?kw=%E5%BC%B1%E6%99%BA&ie=utf-8">“Ruozhiba” (retard forum)</a>.
-            Figure 1a shows the running examples from FLUB.
+            We collect real cunning texts as our raw data from a famous Chinese online forum, the <a href="https://tieba.baidu.com/f?kw=%E5%BC%B1%E6%99%BA&ie=utf-8">“Ruozhiba”</a>.
+            Figure 1(a) shows the running examples from FLUB.
             </p>
             <div class="image-container">
                 <img src="./resources/figure1_flub_example.png" alt="figure1_flub_example.png">
             </div>
             <p style="text-align: left; font-size: 16px;">
-            From these cases, we directly feel the different
-            behaviors of LLMs and humans when facing cunning texts. It is very urgent
-            and meaningful to construct a benchmark composed of cunning texts to evaluate and thereby
-            promote the improvement of LLMs' fallacy understanding capabilities.
+                Based on our constructed FLUB and its annotation information (as shown in Figure 1(b)), 
+                we design three tasks with increasing difficulty to test whether the LLMs can understand the fallacy and solve the "cunning" texts. 
+                Specifically, (1) Answer Selection: The model is asked to select the correct one from the four answers provided by FLUB for each input text. 
+                (2) Cunning Type Classification: Given a cunning text as input, the model is expected to directly identify its fallacy type defined in our scheme. 
+                (3) Fallacy Explanation: We hope the model sees a cunning text and intelligently generates a correct explanation for the fallacy contained in the text, just like humans, without falling into its trap.
             </p>
         </text>
         
