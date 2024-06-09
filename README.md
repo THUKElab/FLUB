@@ -1,6 +1,10 @@
-# FLUB
+<div id="top" align="center">
+# When LLMs Meet Cunning Texts: A Fallacy Understanding Benchmark for Large Language Models
 
-Data and codes for the paper "When LLMs Meet Cunning Texts: A Fallacy Understanding Benchmark for Large Language Models"
+    <!-- <p align="center"> -->
+    <font size="4">[Paper](https://arxiv.org/abs/2402.11100) | [Webpage](https://thukelab.github.io/FLUB/) </font>
+    <!-- </p> -->
+</div>
 
 ### Requirements
 
