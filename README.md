@@ -4,6 +4,10 @@
     <a href="https://arxiv.org/abs/2402.11100">Paper</a> | <a href="https://thukelab.github.io/FLUB/">Webpage</a>
 </p>
 
+### Preliminary
+
+We provide detailed supplementary materials, including Technical Appendices, Datasheet, Metadata, and Author Statement.
+
 ### Requirements
 
 - transformers ~= 4.35.0
