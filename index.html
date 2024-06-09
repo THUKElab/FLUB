@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FLUB: When LLMs Meet Cunning Texts</title>
     <style>
+        ul {
+            list-style-type: disc;
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -168,6 +171,12 @@
         <h2 style="text-align: left;">Experiments</h2>
         <p style="text-align: left; font-size: 16px;">
             The main results are presented as follows and we have some interesting discoveries and insights:
+            <ul>
+                <li>LLMs are very poor in their ability to perceive fallacy types in cunning texts. </li>
+                <li>For a specific task, LLMs with larger parameter sizes do not always perform better. </li>
+                <li>There is a close relationship between the Answer Selection task and the Fallacy Explanation task, and the interaction between them is critical to promoting the understanding of fallacies in LLMs.</li>
+                <li>On FLUB, the widely used Chain-of-Thought and In-context Learning techniques deserve further improvement and research.</li>
+            </ul>
         </p>
         <div class="image-container">
             <img src="./resources/table1_result.png" alt="table1_result.png">
