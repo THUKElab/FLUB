@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Introduction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 60%;
+            margin-bottom: 5px;
+        }
+        h1, h2, h3 {
+            /* font-size: 25px; */
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        div {
+            margin-bottom: 5px;
+            /* text-align: center; */
+        }
+        .author {
+            text-align: center;
+            color: #333;
+        }
+        text {
+            font-size: 16px;
+            line-height: 1.6;
+            /* justify-content: center; */
+            /* align-items: center; */
+            /* text-align: center; */
+            width: 50%;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+        p {
+            margin-bottom: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            /* width: "60%";
+            word-break: break-all;
+            word-wrap: break-word; */
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .buttons a i {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .paper-link {
+            background-color: #007bff;
+        }
+        .paper-link:hover {
+            background-color: #0056b3;
+        }
+        .github-link {
+            background-color: #28a745;
+        }
+        .github-link:hover {
+            background-color: #218838;
+        }
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i>When LLMs Meet Cunning Texts:</i><br>Fallacy Understanding Benchmark for Large Language Models</h1>
+
+        <div class="author">
+            <span class="author">Yinghui Li<sup>1</sup></span>, 
+            <span class="author">Qingyu Zhou</span>,
+            <span class="author">Yuanzhen Luo</span>,
+            <span class="author">Shirong Ma<sup>1</sup></span>,
+            <span class="author">Yangning Li<sup>1</sup></span>,
+            <span class="author">Hai-Tao Zheng<sup>1</sup></span>,
+            <span class="author">Xuming Hu<sup>2</sup></span>,
+            <span class="author">Philip S. Yu<sup>3</sup></span>
+        </div>
+        
+        <div class="author">
+        <span><sup>1</sup>Tsinghua University, <sup>2</sup>The Hong Kong University of Science and Technology (Guangzhou), <sup>3</sup>University of Illinois Chicago</span>
+        </div>
+
+        <div class="author"><span>liyinghu20@mails.tsinghua.edu.cn</span></div>
+
+        <div class="buttons">
+            <a href="https://example.com/paper-link" class="paper-link" target="_blank">
+                <i class="fas fa-book">Read the Paper</i>
+            </a>
+            <a href="https://github.com/THUKElab/FLUB" class="github-link" target="_blank">
+                <i class="fab fa-github">GitHub Repository</i>
+            </a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2 style="text-align: left;">Introduction</h2>
+        <text>
+            <p style="text-align: left; font-size: 16px;">
+            We challenge the reasoning and understanding abilities of LLMs by proposing a FaLlacy Understanding 
+            Benchmark (FLUB) containing cunning texts that are easy for humans to understand but difficult for models to grasp. 
+            We collect real cunning texts as our raw data from a famous Chinese online forum, the <a href="https://tieba.baidu.com/f?kw=%E5%BC%B1%E6%99%BA&ie=utf-8">“Ruozhiba” (retard forum)</a>.
+            Figure 1a shows the running examples from FLUB.
+            </p>
+            <div class="image-container">
+                <img src="./resources/figure1_flub_example.png" alt="figure1_flub_example.png">
+            </div>
+            <p style="text-align: left; font-size: 16px;">
+            From these cases, we directly feel the different
+            behaviors of LLMs and humans when facing cunning texts. It is very urgent
+            and meaningful to construct a benchmark composed of cunning texts to evaluate and thereby
+            promote the improvement of LLMs' fallacy understanding capabilities.
+            </p>
+        </text>
+        
+        <text>
+        <h2 style="text-align: left;">FLUB Dataset</h2>
+        <!-- <h3 style="text-align: left;">FLUB Dataset</h3> -->
+        <p style="text-align: left; font-size: 16px;">
+            (1) Cunning Type Annotation: We first define 8 cunning types within the collected texts along
+            82 with their corresponding examples, as shown in Figure 2.
+        </p>
+        <div class="image-container">
+            <img src="./resources/figure2_cunning_type.png" alt="figure2_cunning_type.png">
+        </div>
+        </text>
+
+        <h2 style="text-align: left;">Experiments</h2>
+        <p style="text-align: left; font-size: 16px;">
+            The main results are presented in Table 1 and we have the following insights:
+        </p>
+        <div class="image-container">
+            <img src="./resources/table1_result.png" alt="table1_result.png">
+        </div>
+        <div class="image-container">
+            <img src="./resources/table2_result.png" alt="table2_result.png">
+        </div>
+    </div>
+</body>
+</html>
