@@ -99,4 +99,4 @@ Please consider citing this paper if you use the `code` or `data` from our work.
 ```
 
 ### License
-The  `data` and our `code` are both subject to the license of [Creative Commons Attribution 4.0 International (CC BY 4.0)](./LICENSE).
+The  `data` and our `code` are both subject to the license of [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](./LICENSE).
